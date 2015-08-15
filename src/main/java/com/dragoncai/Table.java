@@ -1,23 +1,39 @@
 package com.dragoncai;
 
-import com.dragoncai.exceptions.WrongValueException;
-
 public class Table implements ITable {
-    private int tableNumber;
 
-    public Table(int tableNumber) throws WrongValueException {
-        if (tableNumber < 0) {
-            throw new WrongValueException();
-        }
-        this.tableNumber = tableNumber;
+    private int tableNumber;
+    private State state;
+
+    public Table(int tableNumber) {
+        setTableNumber(tableNumber);
+        setState(State.FREE);
     }
 
     public int getTableNumber() {
         return tableNumber;
     }
 
-    public enum State {
-        FREE,
-        OCCUPIED
+    public void setTableNumber(int tableNumber){
+        if (tableNumber < 0) {
+            throw new IllegalArgumentException();
+        }
+        this.tableNumber = tableNumber;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void occupy() {
+        setState(State.OCCUPIED);
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void cleanUp() {
+        setState(State.FREE);
     }
 }
